@@ -26,7 +26,7 @@ const DifficultyLevel = () => {
                     "color" : "black",
                     "marginBottom": "70px"}}
             >
-                <option value="easy" className="text-black">
+                <option value="easy" defaultValue={"Easy"} className="text-black">
                     Easy
                 </option>
                 <option value="medium" className="text-black">

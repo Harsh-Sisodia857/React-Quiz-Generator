@@ -1,12 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import DataContext from '../context/dataContext';
 
 const NumberOfQuestions = () => {
-    const { numberOfQuestions, setNumberOfQuestions } = useContext(DataContext);
+    const { handleNumberOfQuestions } = useContext(DataContext);
+    const [showWarning, setShowWarning] = useState(false);
 
     const handleChange = (e) => {
         const value = e.target.value;
-        setNumberOfQuestions(value);
+        handleNumberOfQuestions(e);
+        setShowWarning(value > 20);
     };
 
     return (
@@ -17,17 +19,21 @@ const NumberOfQuestions = () => {
             <input
                 type="number"
                 id="numberOfQuestions"
-                value={numberOfQuestions}
-                onChange={handleChange}
+                onChange={(e) => handleChange(e)}
                 style={{
                     width: "10%",
                     color: "black"
-}}
+                }}
                 className="w-full p-2 border rounded focus:outline-none focus:border-blue-500"
                 min="1"
-                max="20"
                 defaultValue={10}
             />
+
+            {showWarning && (
+                <div className="text-red-500 mt-2 text-sm">
+                    Please enter a value less than or equal to 20.
+                </div>
+            )}
         </div>
     );
 };

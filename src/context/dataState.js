@@ -20,11 +20,13 @@ export const DataState = (props) => {
             .then(res => res.json())
             .then(data => setQuizs(data))
     }
+    
     // Load JSON Data
     useEffect(() => {
         fetchQuiz();
-    }, []);
+    }, [topic, difficultyLevel, numberOfQuestions]);
 
+   
     // Set a Single Question
     useEffect(() => {
         if (quizs.length > questionIndex) {
@@ -33,7 +35,6 @@ export const DataState = (props) => {
     }, [quizs, questionIndex])
 
     const handleTopic = (topic) => {
-        setTopic(topic);
         console.log("TOPIC : ", topic)
         navigate('/start');
     }
@@ -45,15 +46,12 @@ export const DataState = (props) => {
         const correctAnswerKey = Object.keys(options).find(key => options[key] === "true");
         const formattedCorrectAnswer = correctAnswerKey ? correctAnswerKey.replace('_correct', '') : null;
         const rightAnswer = question.answers[formattedCorrectAnswer];
-        // console.log(selected);
-        // console.log(rightAnswer);
-        // console.log(selectedAnswer);
+
         if (!selectedAnswer) {
             setCorrectAnswer(rightAnswer);
             setSelectedAnswer(selected);
 
             if (selected === rightAnswer) {
-                // event.target.classList.add('bg-success');
                 setMarks(marks + 5);
             } 
         }
@@ -66,14 +64,27 @@ export const DataState = (props) => {
         setQuestionIndex(questionIndex + 1);
     }    
 
-    const handleStartQuiz = () => {
+    const handleStartQuiz = async () => {
         setCorrectAnswer('');
         setSelectedAnswer('');
         setQuestionIndex(0);
         setMarks(0);
-        fetchQuiz();
-        navigate('/quiz')
-    }
+        setQuesion({});
+        navigate('/quiz');
+
+        try {
+            await fetchQuiz();
+            console.log(quizs.error);
+        } catch (error) {
+            console.error('Error fetching quiz:', error);
+        }
+    };
+
+
+    const handleNumberOfQuestions = (e) => {
+        const value = e.target.value;
+        setNumberOfQuestions(value);
+    };
 
     const handleStartAgain = () => {
         setQuizs([])
@@ -90,7 +101,7 @@ export const DataState = (props) => {
         <DataContext.Provider value={{
              question, quizs, checkAnswer, correctAnswer,
             selectedAnswer, questionIndex, nextQuestion, marks,
-            handleTopic, handleStartAgain, topic, handleStartQuiz, setNumberOfQuestions, numberOfQuestions, difficultyLevel, setDifficultyLevel
+            handleTopic, handleStartAgain, topic, handleStartQuiz, setNumberOfQuestions, numberOfQuestions, difficultyLevel, setDifficultyLevel, handleNumberOfQuestions
         }} >
             {props.children}
         </DataContext.Provider>
