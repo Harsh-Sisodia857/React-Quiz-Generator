@@ -2,13 +2,18 @@ import React, { useContext } from 'react';
 import DataContext from '../context/dataContext';
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
+import { useNavigate } from 'react-router-dom';  
 
 const Quiz = () => {
-    const { showQuiz, question, quizs, checkAnswer, correctAnswer,
-        selectedAnswer, questionIndex, nextQuestion, showTheResult } = useContext(DataContext);
-
+    const { question, quizs, checkAnswer, correctAnswer,
+        selectedAnswer, questionIndex, nextQuestion } = useContext(DataContext);
+    const navigate = useNavigate(); 
+    const showTheResult = () => { 
+        navigate('/quiz/result');  // Redirect to '/quiz/result' when the button is clicked
+    }
+    const options = question?.answers;
     return (
-        <section className="bg-dark text-white" style={{ display: `${showQuiz ? 'block' : 'none'}` }}>
+        <section className="bg-dark text-white">
             <div className="container">
                 <div className="row vh-100 align-items-center justify-content-center">
                     <div className="col-lg-8">
@@ -19,16 +24,28 @@ const Quiz = () => {
                             </div>
                             <div>
                                 {
-                                    question?.options?.map((item, index) => <button
-                                        key={index}
-                                        className={`d-flex justify-content-between option w-100 text-start btn text-white px-3 mt-3 rounded btn-dark ${correctAnswer && (correctAnswer === item ? 'bg-success' : selectedAnswer === item ? 'bg-danger' : '')}`}
-                                        onClick={(event) => checkAnswer(event, item)}
-                                    >
-                                            <div>  {item}  </div>
-                                            <div>  {correctAnswer && (correctAnswer === item ? <TiTick style={{fontSize : "26px"}} /> : <ImCross />)}
-                                            </div>
-                                    </button>)
+                                   options && Object.keys(options).map((item, index) => (
+                                        options[item] !== null && (
+                                            <button
+                                                key={index}
+                                               className={`d-flex justify-content-between option w-100 text-start btn text-white px-3 mt-3 rounded btn-dark ${correctAnswer && (correctAnswer === options[item] ? 'bg-success' : selectedAnswer === options[item] ? 'bg-danger' : '')}`}
+                                                onClick={() => checkAnswer(options[item])}
+                                            >
+                                                <div>{options[item]}</div>
+                                                <div>
+                                                   {correctAnswer &&
+                                                       (correctAnswer === options[item] ? (
+                                                            <TiTick style={{ fontSize: '26px' }} />
+                                                   ) : (
+                                                           selectedAnswer === options[item] &&
+                                                            <ImCross />
+                                                        ))}
+                                                </div>
+                                            </button>
+                                        )
+                                    ))
                                 }
+
                             </div>
 
                             {

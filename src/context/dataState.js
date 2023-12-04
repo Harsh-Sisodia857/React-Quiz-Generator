@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import DataContext from "./dataContext";
+import { useNavigate } from 'react-router-dom';  
 
 export const DataState = (props) => {
     // All Quizs, Current Question, Index of Current Question, Answer, Selected Answer, Total Marks
@@ -9,17 +10,17 @@ export const DataState = (props) => {
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [selectedAnswer, setSelectedAnswer] = useState('');
     const [marks, setMarks] = useState(0);
+    const [topic, setTopic] = useState('');
+    const navigate = useNavigate();
 
-    // Display Controlling States
-    const [showStart, setShowStart] = useState(true);
-    const [showQuiz, setShowQuiz] = useState(false);
-    const [showResult, setShowResult] = useState(false);
-
-    // Load JSON Data
-    useEffect(() => {
-        fetch('quiz.json')
+    const fetchQuiz = () => {
+        fetch('https://quizapi.io/api/v1/questions?apiKey=Tefl5ndhZuyEr9ESkIucpLWELZ4Ys7ldaQIXFAll&limit=3&tags=Linux')
             .then(res => res.json())
             .then(data => setQuizs(data))
+    }
+    // Load JSON Data
+    useEffect(() => {
+        fetchQuiz();
     }, []);
 
     // Set a Single Question
@@ -29,24 +30,29 @@ export const DataState = (props) => {
         }
     }, [quizs, questionIndex])
 
-    // Start Quiz
-    const startQuiz = () => {
-        setShowStart(false);
-        setShowQuiz(true);
+    const handleTopic = (topic) => {
+        console.log(topic);
+        setTopic(topic);
     }
 
+  
     // Check Answer
-    const checkAnswer = (event, selected) => {
+    const checkAnswer = (selected) => {
+        const options = question.correct_answers;
+        const correctAnswerKey = Object.keys(options).find(key => options[key] === "true");
+        const formattedCorrectAnswer = correctAnswerKey ? correctAnswerKey.replace('_correct', '') : null;
+        const rightAnswer = question.answers[formattedCorrectAnswer];
+        // console.log(selected);
+        // console.log(rightAnswer);
+        // console.log(selectedAnswer);
         if (!selectedAnswer) {
-            setCorrectAnswer(question.answer);
+            setCorrectAnswer(rightAnswer);
             setSelectedAnswer(selected);
 
-            if (selected === question.answer) {
+            if (selected === rightAnswer) {
                 // event.target.classList.add('bg-success');
                 setMarks(marks + 5);
-            } else {
-                // event.target.classList.add('bg-danger');
-            }
+            } 
         }
     }
 
@@ -54,39 +60,32 @@ export const DataState = (props) => {
     const nextQuestion = () => {
         setCorrectAnswer('');
         setSelectedAnswer('');
-        // const wrongBtn = document.querySelector('button.bg-danger');
-        // wrongBtn?.classList.remove('bg-danger');
-        // const rightBtn = document.querySelector('button.bg-success');
-        // rightBtn?.classList.remove('bg-success');
         setQuestionIndex(questionIndex + 1);
-    }
-
-    // Show Result
-    const showTheResult = () => {
-        setShowResult(true);
-        setShowStart(false);
-        setShowQuiz(false);
-    }
+    }    
 
     // Start Over
     const startOver = () => {
-        setShowStart(false);
-        setShowResult(false);
-        setShowQuiz(true);
         setCorrectAnswer('');
         setSelectedAnswer('');
         setQuestionIndex(0);
         setMarks(0);
-        // const wrongBtn = document.querySelector('button.bg-danger');
-        // wrongBtn?.classList.remove('bg-danger');
-        // const rightBtn = document.querySelector('button.bg-success');
-        // rightBtn?.classList.remove('bg-success');
     }
+
+    const handleStartAgain = () => {
+        setQuizs([])
+        setQuesion({})
+        setQuestionIndex(0)
+        setCorrectAnswer('');
+        setSelectedAnswer('');
+        fetchQuiz();
+        navigate('/quiz');
+    };
+
     return (
         <DataContext.Provider value={{
-            startQuiz, showStart, showQuiz, question, quizs, checkAnswer, correctAnswer,
-            selectedAnswer, questionIndex, nextQuestion, showTheResult, showResult, marks,
-            startOver
+             question, quizs, checkAnswer, correctAnswer,
+            selectedAnswer, questionIndex, nextQuestion, marks,
+            startOver, handleTopic,handleStartAgain
         }} >
             {props.children}
         </DataContext.Provider>
