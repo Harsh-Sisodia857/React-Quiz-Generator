@@ -1,17 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DataContext from '../context/dataContext';
 import { TiTick } from "react-icons/ti";
 import { ImCross } from "react-icons/im";
 import { useNavigate } from 'react-router-dom';  
 import Spinner from './Spinner';
+import NoQuizFound from './NoQuizFound';
 
 const Quiz = () => {
+    const [showNoQuestionsMessage, setShowNoQuestionsMessage] = useState(false);
     const { question, quizs, checkAnswer, correctAnswer,
         selectedAnswer, questionIndex, nextQuestion } = useContext(DataContext);
     const navigate = useNavigate(); 
     const showTheResult = () => {
         navigate('/quiz/result');
     };
+    useEffect(() => {
+        const timerId = setTimeout(() => {
+            if (quizs.length === 0) {
+                setShowNoQuestionsMessage(true);
+            }
+        }, 10000);
+
+        return () => clearTimeout(timerId);
+    }, [quizs]);
+
     const options = question?.answers;   
     return (
  <section className={` ${quizs.length > 0 ? 'bg-dark' : ''} text-white`}>
@@ -59,7 +71,7 @@ const Quiz = () => {
                 }
             </div>
             </div>
-        </div> : <Spinner/>}
+                </div> : (quizs.error && showNoQuestionsMessage ? <NoQuizFound/> :  <Spinner/>)}
     </div>
 </section>
     );

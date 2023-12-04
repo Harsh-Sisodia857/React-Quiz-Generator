@@ -10,10 +10,10 @@ const NoQuizFound = () => {
     };
 
     return (
-        <div>
+        <div className='text-red-500 flex flex-col items-center justify-center my-11' >
             <h1>404 - Not Found</h1>
             <p>The page you're looking for does not exist.</p>
-            <button onClick={handleNavigateHome}>Go to Home Page</button>
+            <button className='btn btn-primary' onClick={handleNavigateHome}>Go to Home Page</button>
         </div>
     );
 };
