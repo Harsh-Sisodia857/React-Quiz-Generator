@@ -9,12 +9,14 @@ export const DataState = (props) => {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [selectedAnswer, setSelectedAnswer] = useState('');
+    const [difficultyLevel, setDifficultyLevel] = useState('Easy');
+    const [numberOfQuestions, setNumberOfQuestions] = useState(10);
     const [marks, setMarks] = useState(0);
     const [topic, setTopic] = useState('');
     const navigate = useNavigate();
 
     const fetchQuiz = () => {
-        fetch(`https://quizapi.io/api/v1/questions?apiKey=Tefl5ndhZuyEr9ESkIucpLWELZ4Ys7ldaQIXFAll&limit=3&tags=${topic}`)
+        fetch(`https://quizapi.io/api/v1/questions?apiKey=Tefl5ndhZuyEr9ESkIucpLWELZ4Ys7ldaQIXFAll&limit=3&tags=${topic}&difficulty=${difficultyLevel}&limit=${numberOfQuestions}`)
             .then(res => res.json())
             .then(data => setQuizs(data))
     }
@@ -88,7 +90,7 @@ export const DataState = (props) => {
         <DataContext.Provider value={{
              question, quizs, checkAnswer, correctAnswer,
             selectedAnswer, questionIndex, nextQuestion, marks,
-             handleTopic, handleStartAgain, topic, handleStartQuiz
+            handleTopic, handleStartAgain, topic, handleStartQuiz, setNumberOfQuestions, numberOfQuestions, difficultyLevel, setDifficultyLevel
         }} >
             {props.children}
         </DataContext.Provider>
