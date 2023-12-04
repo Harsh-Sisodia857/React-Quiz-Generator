@@ -14,7 +14,7 @@ export const DataState = (props) => {
     const navigate = useNavigate();
 
     const fetchQuiz = () => {
-        fetch('https://quizapi.io/api/v1/questions?apiKey=Tefl5ndhZuyEr9ESkIucpLWELZ4Ys7ldaQIXFAll&limit=3&tags=Linux')
+        fetch(`https://quizapi.io/api/v1/questions?apiKey=Tefl5ndhZuyEr9ESkIucpLWELZ4Ys7ldaQIXFAll&limit=3&tags=${topic}`)
             .then(res => res.json())
             .then(data => setQuizs(data))
     }
@@ -31,8 +31,9 @@ export const DataState = (props) => {
     }, [quizs, questionIndex])
 
     const handleTopic = (topic) => {
-        console.log(topic);
         setTopic(topic);
+        console.log("TOPIC : ", topic)
+        navigate('/start');
     }
 
   
@@ -77,15 +78,16 @@ export const DataState = (props) => {
         setQuestionIndex(0)
         setCorrectAnswer('');
         setSelectedAnswer('');
-        fetchQuiz();
-        navigate('/quiz');
+        setMarks(0);
+        setTopic('');
+        navigate('/');
     };
 
     return (
         <DataContext.Provider value={{
              question, quizs, checkAnswer, correctAnswer,
             selectedAnswer, questionIndex, nextQuestion, marks,
-            startOver, handleTopic,handleStartAgain
+            startOver, handleTopic,handleStartAgain,topic
         }} >
             {props.children}
         </DataContext.Provider>
