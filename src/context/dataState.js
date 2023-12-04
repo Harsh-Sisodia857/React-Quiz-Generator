@@ -64,12 +64,13 @@ export const DataState = (props) => {
         setQuestionIndex(questionIndex + 1);
     }    
 
-    // Start Over
-    const startOver = () => {
+    const handleStartQuiz = () => {
         setCorrectAnswer('');
         setSelectedAnswer('');
         setQuestionIndex(0);
         setMarks(0);
+        fetchQuiz();
+        navigate('/quiz')
     }
 
     const handleStartAgain = () => {
@@ -87,7 +88,7 @@ export const DataState = (props) => {
         <DataContext.Provider value={{
              question, quizs, checkAnswer, correctAnswer,
             selectedAnswer, questionIndex, nextQuestion, marks,
-            startOver, handleTopic,handleStartAgain,topic
+             handleTopic, handleStartAgain, topic, handleStartQuiz
         }} >
             {props.children}
         </DataContext.Provider>

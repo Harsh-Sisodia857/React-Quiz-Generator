@@ -1,13 +1,9 @@
 import React,{useContext} from 'react';
-import { useNavigate } from 'react-router-dom';  
 import DataContext from '../context/dataContext';
 
 const Start = () => {
-    const navigate = useNavigate(); 
-    const { topic } = useContext(DataContext);
-    const handleStartQuiz = () => {
-        navigate('/quiz');  // Redirect to '/quiz' when the button is clicked
-    };
+    const { topic, handleStartQuiz } = useContext(DataContext);
+    
     return (
         <section className='text-white text-center bg-dark'>
             <div className="container">
