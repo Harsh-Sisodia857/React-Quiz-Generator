@@ -2,21 +2,27 @@ import React from 'react';
 import Start from './components/Start';
 import Quiz from './components/Quiz';
 import Result from './components/Result';
-import { DataProvider } from './context/dataContext';
+import './App.css';
+import { DataState } from './context/dataState';
 
 function App() {
   return (
-    <DataProvider>
-      {/* Welcome Page */}
-      <Start/>
 
-      {/* Quiz Page */}
-      <Quiz/>
+    <div className="app">
+      <DataState>
+        
+          {/* Welcome Page */}
+          <Start />
 
-      {/* Result Page */}
-      <Result/>
+          {/* Quiz Page */}
+          <Quiz />
 
-    </DataProvider>
+          {/* Result Page */}
+          <Result />
+      </DataState>
+
+    </div>
+      
   );
 }
 

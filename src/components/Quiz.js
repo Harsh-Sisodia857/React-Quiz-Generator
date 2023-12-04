@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import DataContext from '../context/dataContext';
+import { TiTick } from "react-icons/ti";
+import { ImCross } from "react-icons/im";
 
 const Quiz = () => {
     const { showQuiz, question, quizs, checkAnswer, correctAnswer,
-            selectedAnswer,questionIndex, nextQuestion, showTheResult }  = useContext(DataContext);
+        selectedAnswer, questionIndex, nextQuestion, showTheResult } = useContext(DataContext);
 
     return (
         <section className="bg-dark text-white" style={{ display: `${showQuiz ? 'block' : 'none'}` }}>
@@ -19,10 +21,12 @@ const Quiz = () => {
                                 {
                                     question?.options?.map((item, index) => <button
                                         key={index}
-                                        className={`option w-100 text-start btn text-white py-2 px-3 mt-3 rounded btn-dark ${correctAnswer === item && 'bg-success'}`}
+                                        className={`d-flex justify-content-between option w-100 text-start btn text-white px-3 mt-3 rounded btn-dark ${correctAnswer && (correctAnswer === item ? 'bg-success' : selectedAnswer === item ? 'bg-danger' : '')}`}
                                         onClick={(event) => checkAnswer(event, item)}
                                     >
-                                        {item}
+                                            <div>  {item}  </div>
+                                            <div>  {correctAnswer && (correctAnswer === item ? <TiTick style={{fontSize : "26px"}} /> : <ImCross />)}
+                                            </div>
                                     </button>)
                                 }
                             </div>
