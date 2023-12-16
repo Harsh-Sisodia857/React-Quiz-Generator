@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+# Quiz Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Interactive Quiz Platform for Engaging Learning Experiences**
 
-## Available Scripts
+The Quiz Web Application is an interactive and dynamic platform designed to enhance learning through engaging quizzes. With features like timed quizzes, adjustable difficulty levels, customizable quiz length, and a diverse range of topics, our application caters to users of varying expertise and preferences. Whether you're looking for a quick challenge or an extensive exploration, our app adapts to provide a personalized learning experience.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Timed Quizzes:** Experience the excitement of a timed quiz, adding an element of challenge and fun to the learning process.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Adjustable Difficulty Levels:** Tailor the quiz difficulty to your expertise, ensuring an optimal learning curve for users of all skill levels.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Customizable Quiz Length:** Fit learning into your schedule with quizzes of variable lengths, from quick sessions to more extended explorations.
 
-### `npm test`
+- **Diverse Range of Topics:** Explore a wide array of topics to personalize your learning journey and discover new areas of interest.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to Use
 
-### `npm run build`
+1. Clone the repository.
+2. Navigate to the project directory and run `npm install` to install dependencies.
+3. Start the application using `npm start` to launch the quiz platform.
+4. Explore and enjoy the diverse quiz options tailored to your learning preferences.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend:**
+  - React: A JavaScript library for building user interfaces.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- **Backend:**
+  - Node.js: A JavaScript runtime for server-side development.
+  - Express.js: A web application framework for Node.js.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Quiz Logic:**
+  - Timer functionality for timed quizzes. 30 sec per question.
+  - Dynamic question generation based on selected difficulty levels and topics Using Quiz api.
